@@ -41,4 +41,28 @@ function newQuote() {
   complete();
 }
 
+// Get Quotes From API
+async function getQuotes() {
+  loading();
+  const apiUrl = "https://jacintodesign.github.io/quotes-api/data/quotes.json";
+  try {
+    const response = await fetch(apiUrl);
+    apiQuotes = await response.json();
+    newQuote();
+  } catch (error) {
+    // Catch Error Here
+  }
+}
 
+// Tweet Quote
+function tweetQuote() {
+  const twitterUrl = `https://twitter.com/intent/tweet?text=${quoteText.innerText} - ${authorText.innerText}`;
+  window.open(twitterUrl, "_blank");
+}
+
+// Event Listeners
+newQuoteBtn.addEventListener("click", newQuote);
+twitterBtn.addEventListener("click", tweetQuote);
+
+// On Load
+getQuotes();
